@@ -41,6 +41,21 @@ export default function SignUpSite() {
             "user-id": user.uid,
           });
           // ...
+
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem(
+            "userCred",
+            JSON.stringify({
+              firstname,
+              lastname,
+              address,
+              zipcode,
+              city,
+              phone,
+              email,
+              "user-id": user.uid,
+            })
+          );
           navigate("/dashboard");
         })
         .catch((error) => {

@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebase";
+import { auth, database } from "../firebase/firebase";
 import "./LogInSite.scss";
 
 export default function LogInSite() {
@@ -22,6 +22,16 @@ export default function LogInSite() {
           var user = userCredential.user;
           console.log("Log ind", user);
           // ...
+
+          database
+            .collection("users")
+            .doc(user.uid)
+            .get()
+            .then((doc) => {
+              localStorage.setItem("userCred", JSON.stringify(doc.data()));
+            });
+
+          localStorage.setItem("user", JSON.stringify(user));
 
           navigate("/dashboard");
         })
